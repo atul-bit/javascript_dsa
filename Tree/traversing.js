@@ -6,6 +6,7 @@ class Node {
     }
 }
 
+let array = []
 class Tree {
     makeTree(val){
         let newNode = new Node(val)
@@ -65,16 +66,41 @@ class Tree {
 
     preOrder(){
         console.log("this.root", this.root)
-        this.recursivePreOrder(this.root)
+        this.recursivePreOrder(this.root, "")
+        console.log("arr", array)
     }
 
-    recursivePreOrder(node){
-        if(node === null){
+    recursivePreOrder(node, str){
+        if(node.left === null || node.right === null){
+        str = str.concat(node.root)
+
+            console.log("str", str)
+            array.push(str)
             return;
         }
         console.log(node.root)
-        this.recursivePreOrder(node.left);
-        this.recursivePreOrder(node.right);
+        str = str.concat(node.root)
+        console.log("str here", str)
+        this.recursivePreOrder(node.left, str);
+        // str = str.slice(0, -1)
+        this.recursivePreOrder(node.right, str);
+    }
+
+    bfsExample(node){
+        let queue = []
+
+        queue.push(node)
+        while(queue.length > 0){
+            let current = queue.shift()
+            console.log(current.root)
+            if(current.left !== null){
+                queue.push(current.left)
+            }
+            if(current.right !== null){
+                queue.push(current.right)
+            }
+            
+        }
     }
 }
 
@@ -90,5 +116,8 @@ console.log("myTree", myTree.root)
 
 // myTree.postOrder()
 // myTree.inOrder()
-myTree.preOrder()
+// myTree.preOrder()
+
+//implementing bfs
+myTree.bfsExample(myTree.root)
 
